@@ -2,8 +2,12 @@ from urllib import request
 from bs4 import BeautifulSoup
 import pickle
 import time
-file = open('database.txt','w')
+file = open('database.csv','w')
 count = 0
+manufacturer_id=1
+model_id=1
+series_id=1
+engine_id=0
 
 BASE_URL = 'https://www.auto-data.net'
 SETUP = '/en/allbrands'
@@ -17,6 +21,7 @@ def main():
     file.close()
 
 def manufacturer_parser():
+    global manufacturer_id
     manufacturers_links = []
     manufacturers = []
     url = BASE_URL+SETUP
@@ -35,10 +40,13 @@ def manufacturer_parser():
     manufacturers.pop()
     manufacturers.pop()
     manufacturers.pop(0)
+
     for row in range(len(manufacturers_links)):
         model_parser(manufacturers_links[row],manufacturers[row])
+        manufacturer_id +=1
 
 def model_parser(manufacturer_link,manufacturer_name):
+    global model_id
     url = BASE_URL + manufacturer_link
     content = request.urlopen(url)
     raw_html = content.read()
@@ -47,34 +55,33 @@ def model_parser(manufacturer_link,manufacturer_name):
         model_link = modeless['href']
         model = modeless.select('span')[0].get_text()
         body_parser(model_link,model,manufacturer_link,manufacturer_name)
+        model_id +=1
 
 def body_parser(link,model,manufacturer,manufacturer_name):
-    global file, count
+    global file, count, manufacturer_id, model_id, series_id, engine_id
     body_series = []
-    body_engines_names = []
-    body_engine_consumption = []
+    model = 0
     url = BASE_URL + link
     content = request.urlopen(url)
     raw_html = content.read()
     soup = BeautifulSoup(raw_html, 'html.parser')
     for series in soup.find_all('h2'):
         body_series.append(series.get_text())
-        ##print(series.get_text())
     for engine_for_body in soup.find_all(class_='carData colorbl'):
-        names = []
-        consumption = []
         for type in engine_for_body.find_all('a', href = True):
-            names.append(type.get_text())
-            consumption.append(engine_consumption(type['href']))
-        body_engines_names.append(names)
-        body_engine_consumption.append(consumption)
-    for j in range(len(body_series)):
-        for i in range(len(body_engines_names[j])):
-            file.write(str([manufacturer_name,body_series[j], body_engines_names[j][i],body_engine_consumption[j][i]])+'\n')
+            names = type.get_text()
+            consumption = engine_consumption(type['href'])
             count += 1
+            ##file.write(
+            end = (str([manufacturer_id,manufacturer_name,model_id,body_series[model],series_id,names,engine_id,consumption])+'\n')
+            file.write(end)
             print(count)
+        model += 1
+        series_id +=1
 
 def engine_consumption(link):
+    global engine_id
+    engine_id +=1
     data = []
     consumption = 0
     trash = ' l/100 km.'
@@ -88,7 +95,7 @@ def engine_consumption(link):
         if 'Fuel consumption (economy) - combined ' == data[i]:
             in_words = list(data[i+1])
             del in_words [-11:-1]
-            consumption = float(''.join(in_words).split('-')[0])
+            consumption = float(''.join(in_words).split('-')[0].replace('..','.'))
     if consumption == 0:
         return 10
     else:
