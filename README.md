@@ -1,7 +1,4 @@
 # Coscar
-JAVA based programm, that calculates your's car gasoline consumption and it's cost between A and B place.
-## How does it work?
-1. You choose car manufacturer, model, year, type of gasoline and engine.
-2. Enter your's start point and destination.
-3. Enter gasoline price
-4. Press calculate. 
+JAVA based programm, that calculates trip's time and distance based between A and B place traveled by car.
+## Using
+You should download latest jar from  [JSON page](https://github.com/stleary/JSON-java)
