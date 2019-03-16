@@ -1,8 +1,0 @@
-['Abarth', '124 GT', '1.4 MultiAir (170 Hp) Automatic', 6.6]
-['Abarth', '124 GT', '1.4 MultiAir (170 Hp)', 6.4]
-['Abarth', '124 Spider', '1.4 MultiAir (170 Hp) Automatic', 6.6]
-['Abarth', '124 Spider', '1.4 MultiAir (170 Hp)', 6.4]
-['Abarth', '595C', 'Turismo 1.4 T-Jet (165 Hp) Automatic', 5.8]
-['Abarth', '595C', 'Turismo 1.4 T-Jet (165 Hp)', 6.0]
-['Abarth', '595C', 'Pista 1.4 T-Jet (160 Hp) Automatic', 6.0]
-['Abarth', '595C', 'Pista 1.4 T-Jet (160 Hp)', 5.8]
