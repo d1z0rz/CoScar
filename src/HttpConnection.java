@@ -14,7 +14,6 @@ public class HttpConnection {
     }
 
     public String getJSON() {
-        //String url;
         StringBuffer response = new StringBuffer();
         try {
             URL obj = new URL(url);
@@ -34,24 +33,47 @@ public class HttpConnection {
     }
 
     public String distance() {
-        JSONObject myresponse = new JSONObject(getJSON().toString());
-        JSONArray routes = new JSONArray(myresponse.getJSONArray("routes").toString());
-        JSONObject routesClean = (JSONObject) routes.get(0);
-        JSONArray legs = routesClean.getJSONArray("legs");
-        JSONObject legsClean = (JSONObject) legs.get(0);
-        JSONObject distance = legsClean.getJSONObject("distance");
+        JSONObject response = new JSONObject(getJSON());
+        JSONObject rows = (JSONObject) response.getJSONArray("rows").get(0);
+        JSONObject elements = (JSONObject) rows.getJSONArray("elements").get(0);
+        JSONObject distance = elements.getJSONObject("distance");
         return (String) distance.get("text");
+
     }
+
     public String duration() {
-        JSONObject response = new JSONObject(getJSON().toString());
-        JSONArray routes = new JSONArray(response.getJSONArray("routes").toString());
-        JSONObject routesClean = (JSONObject) routes.get(0);
-        JSONArray legs = routesClean.getJSONArray("legs");
-        JSONObject legsClean = (JSONObject) legs.get(0);
-        JSONObject duration = legsClean.getJSONObject("duration");
+        JSONObject response = new JSONObject(getJSON());
+        JSONObject rows = (JSONObject) response.getJSONArray("rows").get(0);
+        JSONObject elements = (JSONObject) rows.getJSONArray("elements").get(0);
+        JSONObject duration = elements.getJSONObject("duration");
         return (String) duration.get("text");
     }
-    public String destinationWeather(){
+
+    public String methodStatus() {
+        JSONObject response = new JSONObject(getJSON());
+        JSONObject rows = (JSONObject) response.getJSONArray("rows").get(0);
+        JSONObject elements = (JSONObject) rows.getJSONArray("elements").get(0);
+        return (String) elements.get("status");
+    }
+
+    public String destinationAddress() {
+        JSONObject response = new JSONObject(getJSON());
+        JSONArray address = (JSONArray) response.get("destination_addresses");
+        return (String) address.get(0);
+    }
+
+    public String originAddress() {
+        JSONObject response = new JSONObject(getJSON());
+        JSONArray address = (JSONArray) response.get("origin_addresses");
+        return (String) address.get(0);
+    }
+
+    public String routeStatus() {
+        JSONObject response = new JSONObject(getJSON());
+        return (String) response.get("status");
+    }
+
+    public String destinationWeather() {
         JSONObject response = new JSONObject(getJSON().toString());
         JSONObject location = response.getJSONObject("current");
         return (String) location.get("temp_c").toString();
