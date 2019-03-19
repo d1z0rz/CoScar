@@ -27,7 +27,6 @@ public class HttpConnection {
                 response.append(inputLine);
             }
             in.close();
-            //System.out.println(response.toString());
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -44,12 +43,17 @@ public class HttpConnection {
         return (String) distance.get("text");
     }
     public String duration() {
-        JSONObject myresponse = new JSONObject(getJSON().toString());
-        JSONArray routes = new JSONArray(myresponse.getJSONArray("routes").toString());
+        JSONObject response = new JSONObject(getJSON().toString());
+        JSONArray routes = new JSONArray(response.getJSONArray("routes").toString());
         JSONObject routesClean = (JSONObject) routes.get(0);
         JSONArray legs = routesClean.getJSONArray("legs");
         JSONObject legsClean = (JSONObject) legs.get(0);
-        JSONObject distance = legsClean.getJSONObject("duration");
-        return (String) distance.get("text");
+        JSONObject duration = legsClean.getJSONObject("duration");
+        return (String) duration.get("text");
+    }
+    public String destinationWeather(){
+        JSONObject response = new JSONObject(getJSON().toString());
+        JSONObject location = response.getJSONObject("current");
+        return (String) location.get("temp_c").toString();
     }
 }
