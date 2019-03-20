@@ -9,6 +9,9 @@ class MessageGenerator {
 
    MessageGenerator() {
         messages = new ArrayList<>();
+        messages.add("message 1");
+        messages.add("message 2");
+        messages.add("message 3");
         randomGenerator = new Random();
     }
 

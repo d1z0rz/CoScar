@@ -125,9 +125,6 @@ public class Main {
             chooseTransport();
         } else if (answer.equals("no")) {
             MessageGenerator mg = new MessageGenerator();
-            mg.addMessage("message 1");
-            mg.addMessage("message 2");
-            mg.addMessage("message 3");
             mg.anyMessage();
         } else {
             System.out.println("Your's aswer was not correct");
