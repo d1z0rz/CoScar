@@ -8,7 +8,7 @@ Input data -> [Google Matrix API](https://developers.google.com/maps/documentati
 ### Everything about classes
 * `urlBulder` is used for building URL link for Google API
 * `urlWather` is used for building URL link for APIXU API
-* `QueryString` is used for attaching query(es) to URL link for API(s)
-* `HttpConnection` is used for sending GET request and reading recieved JSON database
-* `MessageGenerator` is used for generating random message before closing
+* `PäringuSõne` is used for attaching query(es) to URL link for API(s)
+* `HttpÜhendus` is used for sending GET request and reading recieved JSON database
+* `SõnumiGenereerija` is used for generating random message before closing
 * `Main` is used for communicating with user

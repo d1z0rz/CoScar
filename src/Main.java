@@ -2,27 +2,27 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        programBegin();
+        alakuProgramm();
     }
 
-    public static void chooseTransport() {
-        displayBorder();
+    private static void valiLiiklusvahend() {
+        kuvaPiir();
         System.out.println("How do you want to get to your destination?\n(car/walk/bike)");
         Scanner sc = new Scanner(System.in);
-        String transportAnswer = sc.nextLine();
-        if (transportAnswer.equals("car")) {
-            Questionnaire("driving");
-        } else if (transportAnswer.equals("walk")) {
-            Questionnaire("walking");
-        } else if (transportAnswer.equals("bike")) {
-            Questionnaire("bicycling");
+        String liiklusvahendiVastus = sc.nextLine();
+        if (liiklusvahendiVastus.equals("car")) {
+            küsimustik("driving");
+        } else if (liiklusvahendiVastus.equals("walk")) {
+            küsimustik("walking");
+        } else if (liiklusvahendiVastus.equals("bike")) {
+            küsimustik("bicycling");
         } else {
             System.out.println("Your answer is not correct");
-            chooseTransport();
+            valiLiiklusvahend();
         }
     }
 
-    public static void programBegin() {
+    private static void alakuProgramm() {
         System.out.println("\n" +
                 " ________  ________  ________  ________  ________  ________     \n" +
                 "|\\   ____\\|\\   __  \\|\\   ____\\|\\   ____\\|\\   __  \\|\\   __  \\    \n" +
@@ -32,111 +32,111 @@ public class Main {
                 "   \\ \\_______\\ \\_______\\____\\_\\  \\ \\_______\\ \\__\\ \\__\\ \\__\\\\ _\\ \n" +
                 "    \\|_______|\\|_______|\\_________\\|_______|\\|__|\\|__|\\|__|\\|__|\n" +
                 "                       \\|_________|                             \n");
-        clearScreen();
-        chooseTransport();
+        puhastaEkraan();
+        valiLiiklusvahend();
     }
 
-    public static void Questionnaire(String transportMethod) {
-        displayBorder();
+    private static void küsimustik(String liiklusvahend) {
+        kuvaPiir();
         System.out.println("Where would you like to go?");
         Scanner sc = new Scanner(System.in);
-        String destination = sc.nextLine();
+        String sihtkoht = sc.nextLine();
         System.out.println("Enter your origin address");
-        String origin = sc.nextLine();
-        HttpConnection routeInfo = new HttpConnection(new urlBuilder(origin, destination, transportMethod).getRoadURL());
-        if (routeInfo.methodStatus().equals("OK")) {
-            HttpConnection weatherInfo = new HttpConnection(new urlWeather(destination).getWeatgerURL());
-            String distance = routeInfo.distance();
-            String duration = routeInfo.duration();
-            String temperature = weatherInfo.destinationWeather();
-            displayRouteData(distance, duration, transportMethod, temperature);
-            preApproach();
+        String lähtekoht = sc.nextLine();
+        HttpÜhendus teekonnaInfo = new HttpÜhendus(new UrlEhitaja(lähtekoht, sihtkoht, liiklusvahend).getTeeURL());
+        if (teekonnaInfo.meetodiStaatus().equals("OK")) {
+            HttpÜhendus ilmaInfo = new HttpÜhendus(new UrlIlm(sihtkoht).getIlmaURL());
+            String distants = teekonnaInfo.distants();
+            String kestus = teekonnaInfo.kestus();
+            String temperatuur = ilmaInfo.sihtkohaIlm();
+            kuvaTeekonnaInfo(distants, kestus, liiklusvahend, temperatuur);
+            eelLähenemine();
         } else {
-            System.out.println("Sorry, but " + transportMethod + " is not avalible at this route");
-            routeIsNotAvalible(routeInfo);
+            System.out.println("Sorry, but " + liiklusvahend + " is not available at this route");
+            teekondPoleSaadaval(teekonnaInfo);
         }
 
     }
 
-    public static void routeIsNotAvalible(HttpConnection routeName) {
-        displayBorder();
-        System.out.println("Would you like to chect other trasport methods for this route?\n(yes/no)");
+    private static void teekondPoleSaadaval(HttpÜhendus teekonnaNimetus) {
+        kuvaPiir();
+        System.out.println("Would you like to check other transport methods for this route?\n(yes/no)");
         Scanner sc = new Scanner(System.in);
-        String answer = sc.nextLine();
-        if (answer.equals("yes")) {
-            otherTranportMethods(routeName);
-        } else if (answer.equals("no")) {
-            preApproach();
+        String vastus = sc.nextLine();
+        if (vastus.equals("yes")) {
+            teisedLiiklusvahendid(teekonnaNimetus);
+        } else if (vastus.equals("no")) {
+            eelLähenemine();
         } else {
             System.out.println("Your answer is not correct");
-            routeIsNotAvalible(routeName);
+            teekondPoleSaadaval(teekonnaNimetus);
         }
     }
 
-    public static void otherTranportMethods(HttpConnection routeName) {
-        displayBorder();
+    private static void teisedLiiklusvahendid(HttpÜhendus teekonnaNimetus) {
+        kuvaPiir();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Which methond you would like to choose?\n(car/walk)");
-        String answer = sc.nextLine();
-        if (answer.equals("car")) {
-            String destination = routeName.destinationAddress();
-            String origin = routeName.originAddress();
-            HttpConnection routeInfo = new HttpConnection(new urlBuilder(origin, destination, "driving").getRoadURL());
-            HttpConnection weatherInfo = new HttpConnection(new urlWeather(destination).getWeatgerURL());
-            String distance = routeInfo.distance();
-            String duration = routeInfo.duration();
-            String temperature = weatherInfo.destinationWeather();
-            displayRouteData(distance, duration, answer, temperature);
-            preApproach();
+        System.out.println("Which method you would like to choose?\n(car/walk)");
+        String vastus = sc.nextLine();
+        if (vastus.equals("car")) {
+            String sihtkoht = teekonnaNimetus.sihtkohaAadress();
+            String lähtekoht = teekonnaNimetus.lähtekohaAadress();
+            HttpÜhendus teekonnaInfo = new HttpÜhendus(new UrlEhitaja(lähtekoht, sihtkoht, "driving").getTeeURL());
+            HttpÜhendus ilmaInfo = new HttpÜhendus(new UrlIlm(sihtkoht).getIlmaURL());
+            String distants = teekonnaInfo.distants();
+            String kestus = teekonnaInfo.kestus();
+            String temperatuur = ilmaInfo.sihtkohaIlm();
+            kuvaTeekonnaInfo(distants, kestus, vastus, temperatuur);
+            eelLähenemine();
 
 
-        } else if (answer.equals("walk")) {
-            String destination = routeName.destinationAddress();
-            String origin = routeName.originAddress();
-            HttpConnection routeInfo = new HttpConnection(new urlBuilder(origin, destination, "walking").getRoadURL());
-            HttpConnection weatherInfo = new HttpConnection(new urlWeather(destination).getWeatgerURL());
-            String distance = routeInfo.distance();
-            String duration = routeInfo.duration();
-            String temperature = weatherInfo.destinationWeather();
-            displayRouteData(distance, duration, answer, temperature);
-            preApproach();
+        } else if (vastus.equals("walk")) {
+            String sihtkoht = teekonnaNimetus.sihtkohaAadress();
+            String lähtekoht = teekonnaNimetus.lähtekohaAadress();
+            HttpÜhendus teekonnaInfo = new HttpÜhendus(new UrlEhitaja(lähtekoht, sihtkoht, "walking").getTeeURL());
+            HttpÜhendus ilmaInfo = new HttpÜhendus(new UrlIlm(sihtkoht).getIlmaURL());
+            String distants = teekonnaInfo.distants();
+            String kestus = teekonnaInfo.kestus();
+            String temperatuur = ilmaInfo.sihtkohaIlm();
+            kuvaTeekonnaInfo(distants, kestus, vastus, temperatuur);
+            eelLähenemine();
 
         } else {
             System.out.println("Your answer is not correct");
-            otherTranportMethods(routeName);
+            teisedLiiklusvahendid(teekonnaNimetus);
         }
 
     }
 
-    public static void displayRouteData(String distance, String duration, String transportMethod, String temperature) {
-        displayBorder();
-        System.out.println("Your route by " + transportMethod + " consist of\n" +
-                "distance: " + distance + "\n" +
-                "lasts for " + duration + "\n" +
-                "outside temperature at the destination will be " + temperature + " degrees");
+    private static void kuvaTeekonnaInfo(String distants, String kestus, String liiklusvahend, String temperatuur) {
+        kuvaPiir();
+        System.out.println("Your route by " + liiklusvahend + " consist of\n" +
+                "distance: " + distants + "\n" +
+                "lasts for " + kestus + "\n" +
+                "outside temperature at the destination will be " + temperatuur + " degrees");
     }
 
-    public static void preApproach() {
-        displayBorder();
+    private static void eelLähenemine() {
+        kuvaPiir();
         Scanner sc = new Scanner(System.in);
         System.out.println("Would you like to go to another destination?\n(yes/no)");
-        String answer = sc.nextLine();
-        if (answer.equals("yes")) {
-            chooseTransport();
-        } else if (answer.equals("no")) {
-            MessageGenerator mg = new MessageGenerator();
-            mg.anyMessage();
+        String vastus = sc.nextLine();
+        if (vastus.equals("yes")) {
+            valiLiiklusvahend();
+        } else if (vastus.equals("no")) {
+            SõnumiGenereerija mg = new SõnumiGenereerija();
+            mg.juhuslikSõnum();
         } else {
-            System.out.println("Your's aswer was not correct");
-            preApproach();
+            System.out.println("Your's answer was not correct");
+            eelLähenemine();
         }
     }
 
-    public static void displayBorder() {
+    private static void kuvaPiir() {
         System.out.println("=================================================");
     }
 
-    public static void clearScreen() {
+    private static void puhastaEkraan() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
