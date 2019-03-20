@@ -1,21 +1,23 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class MessageGenerator {
-    private Random randomGenerator;
-    private ArrayList<String> messages;
+class MessageGenerator {
 
-    public void MessageGenerator() {
+    private Random randomGenerator;
+    private List<String> messages;
+
+   MessageGenerator() {
         messages = new ArrayList<>();
         randomGenerator = new Random();
     }
 
-    public void addMessage(String message){
+    void addMessage(String message){
         messages.add(message);
     }
 
-    public String anyMessage(){
+    void anyMessage(){
         int index = randomGenerator.nextInt(messages.size());
-        return messages.get(index);
+        System.out.println(messages.get(index));
     }
 }

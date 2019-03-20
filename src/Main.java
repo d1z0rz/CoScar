@@ -124,8 +124,11 @@ public class Main {
         if (answer.equals("yes")) {
             chooseTransport();
         } else if (answer.equals("no")) {
-            //todo from messages
-            System.out.println("Have a nice day! Good bye!");
+            MessageGenerator mg = new MessageGenerator();
+            mg.addMessage("message 1");
+            mg.addMessage("message 2");
+            mg.addMessage("message 3");
+            mg.anyMessage();
         } else {
             System.out.println("Your's aswer was not correct");
             preApproach();

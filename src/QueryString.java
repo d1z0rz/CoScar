@@ -5,11 +5,11 @@ public class QueryString {
 
     private String query = "";
 
-    public QueryString(String name, String value) {
+    QueryString(String name, String value) {
         encode(name, value);
     }
 
-    public void add(String name, String value) {
+    void add(String name, String value) {
         query += "&";
         encode(name, value);
     }
@@ -24,7 +24,7 @@ public class QueryString {
         }
     }
 
-    public String getQuery() {
+    private String getQuery() {
         return query;
     }
 

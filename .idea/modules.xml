@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CoScar.iml" filepath="$PROJECT_DIR$/CoScar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coscar.iml" filepath="$PROJECT_DIR$/coscar.iml" />
     </modules>
   </component>
 </project>
