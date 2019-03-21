@@ -8,7 +8,8 @@ class SõnumiGenereerija {
     private List<String> sõnumid;
 
    SõnumiGenereerija() {
-        sõnumid = Arrays.asList("message 1", "message 2", "message 3");
+        sõnumid = Arrays.asList("Have a nice trip!", "Good luck!", "Discover our world!",
+                "See you then","Best day ever!");
         juhuarvugeneraator = new Random();
     }
 

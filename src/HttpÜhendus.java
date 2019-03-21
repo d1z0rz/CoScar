@@ -34,16 +34,16 @@ public class HttpÜhendus {
         JSONObject vastus = new JSONObject(getJSON());
         JSONObject read = (JSONObject) vastus.getJSONArray("rows").get(0);
         JSONObject elemendid = (JSONObject) read.getJSONArray("elements").get(0);
-        JSONObject distants = elemendid.getJSONObject("distants");
+        JSONObject distants = elemendid.getJSONObject("distance");
         return (String) distants.get("text");
 
     }
 
     String kestus() {
         JSONObject vastus = new JSONObject(getJSON());
-        JSONObject read = (JSONObject) vastus.getJSONArray("read").get(0);
+        JSONObject read = (JSONObject) vastus.getJSONArray("rows").get(0);
         JSONObject elemendid = (JSONObject) read.getJSONArray("elements").get(0);
-        JSONObject kestus = elemendid.getJSONObject("kestus");
+        JSONObject kestus = elemendid.getJSONObject("duration");
         return (String) kestus.get("text");
     }
 
