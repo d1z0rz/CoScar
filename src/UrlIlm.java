@@ -1,5 +1,5 @@
 class UrlIlm {
-    String sihtkoht;
+    private String sihtkoht;
     private String apixuVõti = "2c69350d0eb5431c930130942191803";
 
     UrlIlm(String sihtkoht) {

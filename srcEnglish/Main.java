@@ -1,3 +1,5 @@
+package srcEnglish;
+
 import java.util.Scanner;
 
 public class Main {

@@ -1,3 +1,5 @@
+package srcEnglish;
+
 public class urlWeather {
     String destination;
     private String apixuKey = "2c69350d0eb5431c930130942191803";
